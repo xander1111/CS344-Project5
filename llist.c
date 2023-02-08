@@ -33,6 +33,14 @@ void llist_print(struct node* head) {
 }
 
 
+void llist_free(struct node** head) {
+    struct node* next_node = (*head)->next;
+    node_free(*head);
+    *head = NULL;
+    if (next_node != NULL) llist_free(&next_node);
+}
+
+
 struct node* node_alloc(int value) {
     struct node* new_node = malloc(sizeof (struct node));
     new_node->value = value;
@@ -65,6 +73,10 @@ void test(void) {
     llist_insert_tail(&head, new_head);
     printf("added new tail:\n");
     llist_print(head);
+
+    llist_free(&head);
+    printf("freed list:\n");
+    printf("%s \n", head);
 }
 
 
