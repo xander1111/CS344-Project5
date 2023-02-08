@@ -3,8 +3,21 @@
 #include <string.h>
 #include <stdlib.h>
 
+struct node* node_alloc(int value) {
+    struct node* new_node = malloc(sizeof (struct node));
+    new_node->value = value;
+    new_node->next = NULL;
 
-int main(int argc, char *argv[])
+    return new_node;
+}
+
+
+void node_free(struct node* n) {
+    free(n);
+}
+
+
+int main(int argc, char* argv[])
 {
     struct node* head = NULL;
 
