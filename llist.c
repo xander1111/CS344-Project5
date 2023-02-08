@@ -4,6 +4,8 @@
 #include <stdlib.h>
 
 void llist_insert_head(struct node** head, struct node* n) {
+    if (head == NULL) return;
+
     n->next = *head;
 }
 
@@ -17,12 +19,21 @@ struct node* llist_delete_head(struct node** head) {
 
 
 void llist_insert_tail(struct node** head, struct node* n) {
+    if (*head == NULL) {
+        *head = n;
+        return;
+    }
     if ((*head)->next != NULL) llist_insert_tail(&(*head)->next, n);
     (*head)->next = n;
 }
 
 
 void llist_print(struct node* head) {
+    if (head == NULL) {
+        printf("[empty]\n");
+        return;
+    }
+
     printf("%d", head->value);
     if (head->next) {
         printf(" -> ");
@@ -35,6 +46,7 @@ void llist_print(struct node* head) {
 
 
 void llist_free(struct node** head) {
+    if (*head == NULL) return;
     struct node* next_node = (*head)->next;
     node_free(*head);
     *head = NULL;
@@ -77,7 +89,32 @@ void test(void) {
 
     llist_free(&head);
     printf("freed list:\n");
-    printf("%s \n", head);
+    llist_print(head);
+
+    head = NULL;
+    new_node = node_alloc(123);
+
+    llist_insert_head(&head, new_node);
+    head = new_node;
+    printf("added head to empty:\n");
+    llist_print(head);
+
+    llist_free(&head);
+
+    head = NULL;
+    new_node = node_alloc(123);
+
+    llist_insert_tail(&head, new_node);
+    printf("added tail to empty:\n");
+    llist_print(head);
+
+    llist_free(&head);
+    printf("freed list:\n");
+    llist_print(head);
+
+    llist_free(&head);
+    printf("freed list again:\n");
+    llist_print(head);
 }
 
 
