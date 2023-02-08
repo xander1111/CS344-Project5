@@ -3,6 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+void llist_insert_head(struct node** head, struct node* n) {
+    n->next = *head;
+}
+
+
 void llist_print(struct node* head) {
     printf("%d", head->value);
     if (head->next) {
@@ -29,9 +34,13 @@ void node_free(struct node* n) {
 }
 
 
-void test_print(void) {
+void test(void) {
     struct node* head = node_alloc(123);
     llist_print(head);
+
+    struct node* new_head = node_alloc(456);
+    llist_insert_head(&head, new_head);
+    llist_print(new_head);
 }
 
 
@@ -39,7 +48,7 @@ int main(int argc, char* argv[])
 {
     struct node* head = NULL;
 
-    test_print();
+    test();
     exit(0);
 
     for (int i = 0; i < argc; i++)
