@@ -10,8 +10,9 @@ void llist_insert_head(struct node** head, struct node* n) {
 
 struct node* llist_delete_head(struct node** head) {
     if (*head == NULL) return NULL;
+    struct node* new_head = (*head)->next;
     (*head)->next = NULL;
-    return *head;
+    return new_head;
 }
 
 
@@ -60,17 +61,17 @@ void test(void) {
     printf("First node added:\n");
     llist_print(head);
 
-    struct node* new_head = node_alloc(456);
-    llist_insert_head(&head, new_head);
+    struct node* new_node = node_alloc(456);
+    llist_insert_head(&head, new_node);
+    head = new_node;
     printf("2nd node added:\n");
-    llist_print(new_head);
-
-    struct node* old_head = llist_delete_head(&new_head);
-    printf("removed node, print each node:\n");
-    llist_print(old_head);
     llist_print(head);
 
-    llist_insert_tail(&head, new_head);
+    head = llist_delete_head(&head);
+    printf("removed head:\n");
+    llist_print(head);
+
+    llist_insert_tail(&head, new_node);
     printf("added new tail:\n");
     llist_print(head);
 
