@@ -101,6 +101,8 @@ int main(int argc, char* argv[])
             llist_print(head);
         }
     }
+
+    llist_free(&head);
 }
 
 
